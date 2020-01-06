@@ -11,7 +11,7 @@ def compile_csv(data_path=None):
         data_path = os.path.join(proj_path, 'data')
     csv_files = list(filter(re.compile('Full').match, sorted(os.listdir(data_path))))
     dfs = []
-    for file in csv_files[0:4]:
+    for file in csv_files:
         filename = os.path.join(data_path, file)
         df = pd.read_csv(filename, delimiter=',', quoting=csv.QUOTE_MINIMAL,
                          header=0, low_memory=False)
