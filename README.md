@@ -1,5 +1,5 @@
-# LA_SF_Housing_Market_Watch
-LA and SF Housing Market Comparison
+LA_SF_Housing_Market_Watch
+# LA and SF Housing Market Comparison
 
 Contributors: [Jeff Lin](https://github.com/jleifnf), [Trey Younce](https://github.com/treyounce)
 
