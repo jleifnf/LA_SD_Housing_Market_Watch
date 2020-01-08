@@ -5,7 +5,6 @@ Contributors: [Jeff Lin](https://github.com/jleifnf), [Trey Younce](https://gith
 
 
 ## Project Goal: Evaluate the housing market in San Diego and Los Angeles in California. 
--
 
    Hypothesis 
  - Is the average Time on Market of LA shorter than Time on Market of SD?
