@@ -15,8 +15,8 @@ Contributors: [Jeff Lin](https://github.com/jleifnf), [Trey Younce](https://gith
 [Slide Deck PDF](https://github.com/jleifnf/LA_SD_Housing_Market_Watch/blob/master/LA%20%26%20SD%20Housing%20Market%20Analysis.pdf)
 
 [Data Sources](http://go.crmls.com)
-  [CSVs](https://github.com/jleifnf/LA_SD_Housing_Market_Watch/tree/master/data)
-  [Cleaned Dataset](https://github.com/jleifnf/LA_SD_Housing_Market_Watch/blob/master/data/cleaned_data.csv)
+   - [CSVs](https://github.com/jleifnf/LA_SD_Housing_Market_Watch/tree/master/data)
+   - [Cleaned Dataset](https://github.com/jleifnf/LA_SD_Housing_Market_Watch/blob/master/data/cleaned_data.csv)
   
 [Notebook](https://github.com/jleifnf/LA_SD_Housing_Market_Watch/blob/master/notebook.ipynb)
 
