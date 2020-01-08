@@ -5,6 +5,15 @@ import csv
 import os
 
 
+def datetime_to_weekofyear(datetime):
+    if int(datetime.dayofyear) > 358 and int(datetime.weekofyear) == 1:
+        return str(datetime.year) + ' - ' + str(53)
+    elif int(datetime.weekofyear) < 10:
+        return str(datetime.year) + ' - 0' + str(datetime.weekofyear)
+    else:
+        return str(datetime.year) + ' - ' + str(datetime.weekofyear)
+
+
 def compile_csv(data_path=None):
     if data_path is None:
         proj_path = os.getcwd().replace('/codes', '')
@@ -12,7 +21,7 @@ def compile_csv(data_path=None):
     csv_files = list(filter(re.compile('Full').match, sorted(os.listdir(data_path))))
 
     cols_tokeep = ['Matrix_Unique_ID', 'CountyOrParish', 'OnMarketDate',
-                   'CloseDate', 'CumulativeDaysOnMarket', 'ListPrice', 'ClosePrice']
+                   'CloseDate', 'ListPrice', 'ClosePrice']
 
     dfs = []
     for file in csv_files:
@@ -31,8 +40,13 @@ def data_preprocessing(df):
     df = df.sort_values(by='CloseDate')
     df.CloseDate = df.CloseDate.where((df.CloseDate.dt.year > 2014)
                                       & (df.CloseDate.dt.year < 2020))
-
     df = df.dropna().sort_values(by='CloseDate')
+
+    df['OnMarketDays'] = df.CloseDate - df.OnMarketDate
+    df.OnMarketDays = df.OnMarketDays.dt.days.astype('int64')
+
+    for col in ['ClosePrice', 'ListPrice', 'OnMarketDays']:
+        df = df[df[col] < df[col].quantile(0.99)]
 
     df['CloseYearWeek'] = df.CloseDate.apply(datetime_to_weekofyear)
 
@@ -42,17 +56,20 @@ def data_preprocessing(df):
 
     df = df[(df.PriceRatio < 2) & (df.PriceDiffRatio > -0.95)]
 
-    df['OnMarketDays'] = df.CloseDate - df.OnMarketDate
-    df.OnMarketDays = df.OnMarketDays.dt.days.astype('int64')
+    df = df[df.OnMarketDays > 0]
+    df.CountyOrParish = pd.Categorical(df.CountyOrParish)
+    df.CloseYearWeek = pd.Categorical(df.CloseYearWeek)
+
+    df['SixtyDays'] = df.OnMarketDays.map(lambda x: '> 60 days' if x > 60 else '< 60 days')
 
     return df
 
 
-def datetime_to_weekofyear(datetime):
-    if int(datetime.dayofyear) > 358 and int(datetime.weekofyear) == 1:
-        return str(datetime.year) + ' - ' + str(53)
-    else:
-        return str(datetime.year) + ' - ' + str(datetime.weekofyear)
+def CLT_bootstrap(df, n_times=200, n_samples=1000):
+    """ Returns the dataframe with only the variables of interest """
+    rs = np.random.RandomState(seed=2020)
+    means = [pd.DataFrame(df.sample(1000, replace=True, random_state=rs).mean()).T for i in range(n_times)]
+    return pd.concat(means)
 
 # mls_df = compile_csv()
 # mls_df = data_preprocessing(mls_df)
