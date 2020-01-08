@@ -2,7 +2,9 @@
 LA and SF Housing Market Comparison
 
 Contributors: [Jeff Lin](https://github.com/jleifnf), [Trey Younce](https://github.com/treyounce)
-##$ Project Goal: Evaluate the housing market in San Diego and Los Angeles in California. 
+
+
+## Project Goal: Evaluate the housing market in San Diego and Los Angeles in California. 
 -
 
    Hypothesis 
