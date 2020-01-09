@@ -11,10 +11,13 @@ def read_listings(fName):
                         header=0, low_memory=False)
     #
     list_agent_cols = list(filter(re.compile('ListAgent').match, mlsDB.columns))
+    colist_agent_cols = list(filter(re.compile('CoListAgent').match, mlsDB.columns))
     buyer_agent_cols = list(filter(re.compile('BuyerAgent').match, mlsDB.columns))
-    text_cols = ['PublicRemarks', 'PrivateRemarks',
-                 'SyndicationRemarks', 'ShowingInstructions']
-    mlsDB[list_agent_cols + buyer_agent_cols + text_cols] = ''
+    cobuyer_agent_cols = list(filter(re.compile('CoBuyerAgent').match, mlsDB.columns))
+    text_cols = ['PublicRemarks', 'PrivateRemarks','SyndicationRemarks',
+                 'ShowingInstructions', 'StreetNumberNumeric', 'StreetName',
+                 'ParcelNumber']
+    mlsDB[list_agent_cols+ colist_agent_cols + buyer_agent_cols + text_cols] = ''
     #
     return mlsDB
 
