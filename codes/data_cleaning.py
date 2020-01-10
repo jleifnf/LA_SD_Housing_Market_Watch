@@ -68,7 +68,7 @@ def data_preprocessing(df):
 def CLT_bootstrap(df, n_times=200, n_samples=1000):
     """ Returns the dataframe with only the variables of interest """
     rs = np.random.RandomState(seed=2020)
-    means = [pd.DataFrame(df.sample(1000, replace=True, random_state=rs).mean()).T for i in range(n_times)]
+    means = [pd.DataFrame(df.sample(n_samples, replace=True, random_state=rs).mean()).T for i in range(n_times)]
     return pd.concat(means)
 
 # mls_df = compile_csv()

@@ -73,13 +73,13 @@ def barplot(x, y, data=None, hue=None, title=None, figsize=(16, 9), order=None,
         return fig, ax
 
 
-def distplot(d1, d2, d1_label, d2_label=None, d1_popstat=None, d2_popstat=None,
+def distplot(d1, d2, d1_label=None, d2_label=None, d1_popstat=None, d2_popstat=None,
              bins=None, kde=True, title='Histogram', figsize=(8, 4.5),
              c='k', context='notebook', savefig=False):
     """
     d1,d2             = datas to plot (bootstrapped means)
     d1_label, d2label = labels for datas
-    d1_(d2_)popstat   = tuple of population/dataset (mean,stdev)
+    d1_(d2_)popstat   = tuple of population/dataset (mean,ci)
     bins              = number of equally sized bins for
     kde               = True: if to plot kernel-density; False: if to take the plot away
     lim               = axis limits (tuple: (xlim=(xmin xmax),ylim=(ymin ymax))
@@ -90,17 +90,17 @@ def distplot(d1, d2, d1_label, d2_label=None, d1_popstat=None, d2_popstat=None,
         sns.distplot(d2, bins=bins, kde=kde, label=d2_label, hist=False, kde_kws={"shade": True}, color='r', ax=ax)
         if d1_popstat or d2_popstat:
             ymax = ax.get_ylim()[1]
-            print(ymax)
             d1_mu = d1_popstat[0]
-            d1_ci = [d1_mu + 2 * d1_popstat[1], d1_mu - 2.58 * d1_popstat[1]]
+            d1_ci = [d1_mu + d1_popstat[1], d1_mu - d1_popstat[1]]
             d2_mu = d2_popstat[0]
-            d2_ci = [d2_mu + 2 * d2_popstat[1], d2_mu - 2.58 * d2_popstat[1]]
+            d2_ci = [d2_mu + d2_popstat[1], d2_mu - d2_popstat[1]]
             ax.vlines(d1_mu, 0, ymax, colors='b')
             ax.vlines(d1_ci, 0, ymax, linestyles='dashed', colors='b')
             ax.vlines(d2_mu, 0, ymax, colors='r')
             ax.vlines(d2_ci, 0, ymax, linestyles='dashed', colors='r')
             ax.set_ylim(0,ymax)
         ax = ax_params(ax, title, c)
+        ax.set_title(title)
         plt.legend()
         if savefig:
             fig.savefig('figs/{}-distplot.png'.format(title), transparent=True, dpi=200, bbox_inches='tight')
