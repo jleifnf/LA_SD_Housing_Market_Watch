@@ -5,6 +5,7 @@ Contributors: [Jeff Lin](https://github.com/jleifnf), [Trey Younce](https://gith
  
 
 ## Project Goal: Evaluate the housing market in San Diego and Los Angeles in California. 
+Utilizing various statistical methods in an effort to analyze California’s housing shortage, considering the effect of time on the market for housing in LA and SD county. 
 
 ![](images/CA-sold.jpg)
 
